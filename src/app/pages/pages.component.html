@@ -1,0 +1,4 @@
+<app-sidenav (onToggleSidenav)="onToggleSidenav($event)" />
+<div class="body" [ngClass]="getBodyClass()">
+  <router-outlet />
+</div>

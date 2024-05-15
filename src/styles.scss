@@ -1,0 +1,20 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
+
+html,
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  --bg-sidenav: #263238;
+  --bg-body: #f4f7fa;
+  --bg-card: #fff;
+  --color-sidenav-item: #f3f3f3;
+  --bg-sidenav-item-active: #fff;
+  --color-sidenav-item-active: #000;
+}
+
+body {
+  position: relative;
+  font-family: 'Roboto', sans-serif;
+}
