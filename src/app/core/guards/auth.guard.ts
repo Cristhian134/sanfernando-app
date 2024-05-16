@@ -1,24 +1,37 @@
-import { Injectable, inject } from '@angular/core';
-import {
-  CanActivate,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  Router,
-  CanActivateFn,
-} from '@angular/router';
+import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 
-export const authGuard: CanActivateFn = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-) => {
-  if (inject(AuthService).isLogged()) {
-    console.log(inject(AuthService).isLogged())
-    console.log(Router.prototype.url.toString())
-    return true;
+export const authGuard: CanActivateFn = (route, state) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
+  if (authService.isLogged()) {
+    if (route.url.length > 0) {
+      let menu = route.url[0].path;
+      console.log(route.url.toString())
+      if (menu == "almacen") {
+        if (authService.getUserRole() == 'Almacen') {
+          return true;
+        } else {
+          router.navigate(['pages/home']);
+          console.log('No tienes acceso')
+          return false;
+        }
+      } else {
+
+        return true;
+      }
+    } else {
+      return true
+    }
   } else {
-    inject(Router).navigate(['/login']);
-    console.log(sessionStorage.getItem("dni"))
+    router.navigate(['login']);
     return false;
   }
+
+  // if (authService.isLogged() == false) {
+  //   router.navigate(['/login']);
+  //   return false;
+  // }
+  // return true;
 };
