@@ -33,6 +33,14 @@
       font-size: 24px;
       font-weight: 700;
       color: #fff;
+      display: flex;
+      justify-content: left;
+      align-items: center;
+
+      img {
+        width: 90%;
+        height: auto;
+      }
     }
 
     .btn-close {
