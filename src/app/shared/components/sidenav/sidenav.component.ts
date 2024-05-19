@@ -24,11 +24,11 @@ export class SidenavComponent {
 
   @Output() onToggleSidenav: EventEmitter<SideNavToggle> = new EventEmitter();
   collapsed = false;
-  screenWidth = 0;
+  screenWidth = window.innerWidth;
   navData = data;
 
   ngOnInit(): void {
-    this.screenWidth = window.innerWidth;
+    this.onToggleSidenav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
   }
 
   toggleCollapse(): void {

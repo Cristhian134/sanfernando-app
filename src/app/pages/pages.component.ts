@@ -29,7 +29,7 @@ export class PagesComponent {
     // this.sidenavService.sidenavToggle.subscribe(sidenavToggle => {
     //   this.sidenavToggle = sidenavToggle;
     // });
-    console.log("Pagina home cargada")
+    this.getBodyClass();
   }
   collapsed = false;
   screenWidth = 0;
