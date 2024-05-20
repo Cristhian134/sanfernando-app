@@ -8,11 +8,14 @@ import { SkeletonModule } from 'primeng/skeleton';
 import { PedidosService } from '../../../core/services/pedidos.service';
 import { ProductoResponse } from '../../../core/models/response/producto';
 import { CommonModule } from '@angular/common';
+import { CartComponent } from '../../../shared/components/cart/cart.component';
+import { CartService } from '../../../core/services/cart.service';
 
 @Component({
   selector: 'app-solicitud-productos',
   standalone: true,
   imports: [
+    CartComponent,
     CommonModule,
     ButtonModule,
     RatingModule,
@@ -31,7 +34,8 @@ export class SolicitudProductosComponent implements OnInit {
 
   constructor(
     private pedidoService: PedidosService,
-    private router: Router
+    private router: Router,
+    private cartService: CartService
   ) { }
 
   ngOnInit(): void {
@@ -44,12 +48,13 @@ export class SolicitudProductosComponent implements OnInit {
   complete() {
     return null;
   }
-
-
   prevPage() {
     this.router.navigate(['pages/pedidos/proceso/datos-envio']);
   }
 
+  onClickAdd(product: ProductoResponse) {
+    this.cartService.addNewProduct(product);
+  }
 
   getSeverity(product: ProductoResponse) {
     return null

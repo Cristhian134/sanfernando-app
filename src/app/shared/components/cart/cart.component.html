@@ -1,1 +1,19 @@
-<p>cart works!</p>
+<section class="cart-section">
+  <h1 class="title-cart">Carrito de compras</h1>
+  <ul class="products-cart">
+    @for (product of products; track product.idElementoCatalogo; let idx = $index) {
+    <li class="product-cart">
+      <div class="detail-product-cart">
+        <span class="title-product-cart">{{product.nombre}}</span>
+        <span class="price-product-cart">{{product.unidad}}</span>
+      </div>
+      <button class="delete-product-cart" (click)="onClickDelete(idx)">Borrar</button>
+      <span>
+
+      </span>
+    </li>
+    } @empty {
+    <h2 class="cart-section">No hay productos en el carrito de compras.</h2>
+    }
+  </ul>
+</section>
