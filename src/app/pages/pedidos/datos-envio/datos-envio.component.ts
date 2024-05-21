@@ -10,6 +10,7 @@ import { PedidosService } from '../../../core/services/pedidos.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { CalendarModule } from 'primeng/calendar';
+import { PedidoFormResponse } from '../../../core/models/response/pedido-form-response';
 
 interface PedidoForm {
   nombres: string;
@@ -19,8 +20,8 @@ interface PedidoForm {
   telefono: string;
   correo: string;
   empresa: string;
-  fechaSolicitud: string;
-  fechaEntrega: string;
+  fechaSolicitud: Date;
+  fechaEntrega: Date;
 }
 
 @Component({
@@ -42,7 +43,7 @@ interface PedidoForm {
 export class DatosEnvioComponent implements OnInit {
 
   pedidoFormRequest?: PedidoFormRequest;
-
+  pedidoFormResponse?: PedidoFormResponse;
   generos?: Genero[];
   genero?: Genero;
 
@@ -54,8 +55,8 @@ export class DatosEnvioComponent implements OnInit {
     telefono: this.formBuilder.control('', Validators.required),
     correo: this.formBuilder.control('', Validators.required),
     empresa: this.formBuilder.control('', Validators.required),
-    fechaSolicitud: this.formBuilder.control('', Validators.required),
-    fechaEntrega: this.formBuilder.control('', Validators.required),
+    fechaSolicitud: this.formBuilder.control<Date | null>(null, Validators.required),
+    fechaEntrega: this.formBuilder.control<Date | null>(null, Validators.required),
   })
 
   constructor(
@@ -91,13 +92,23 @@ export class DatosEnvioComponent implements OnInit {
       };
       console.log(this.pedidoFormRequest)
       this.pedidoService.postDatosEnvio(this.pedidoFormRequest as PedidoFormRequest).subscribe((response) => {
-        console.log(response)
+        this.pedidoFormResponse = response;
+        this.nextPage();
       });
-      // this.nextPage();
     }
   }
 
   nextPage() {
-    this.router.navigate(['pages/pedidos/proceso/solicitud-productos']);
+    this.router.navigate(
+      ['pages/pedidos/proceso/solicitud-productos'],
+      {
+        state:
+        {
+          formResponse: this.pedidoFormResponse,
+          fechaEntrega: this.pedidoForm.value.fechaEntrega,
+          fechaSolicitud: this.pedidoForm.value.fechaSolicitud
+        }
+      }
+    );
   }
 }

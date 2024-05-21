@@ -95,11 +95,15 @@ export class PedidosHomeComponent implements OnInit {
       );
       return this.pedidosFilter = filterPedidos;
     } else {
-      const filterPedidos = this.pedidos.filter((pedido) => {
+      const filterPedidos: PedidoListaResponse[] = this.pedidos.filter((pedido) =>
         pedido.estado.toLowerCase() === event.toLowerCase()
-      });
+      );
       return this.pedidosFilter = filterPedidos;
     }
+  }
+
+  getDetalles(idPedido: number): void {
+    this.router.navigate([`pages/pedidos/detalle/${idPedido}`]);
   }
 
   getSeverity(status: string) {

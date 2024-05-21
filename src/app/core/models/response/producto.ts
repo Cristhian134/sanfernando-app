@@ -7,4 +7,5 @@ export interface ProductoResponse {
   idElementoCatalogoTipo: number;
   peso: number;
   unidad: string;
+  cantidad: number;
 }

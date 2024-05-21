@@ -3,4 +3,5 @@ export interface LoginResponse {
   area: string;
   cliente: string;
   representante: boolean;
+  idEmpleado: number;
 }

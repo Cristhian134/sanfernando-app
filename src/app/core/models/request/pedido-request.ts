@@ -1,7 +1,11 @@
+import { TicketProductoRequest } from "./ticket-producto-request";
+
 export interface PedidoRequest {
   idRepresentante?: number;
-  idEmpleado?: number;
-  idPedidoTipo?: number;
-  idPedidoEstado?: number;
+  idEmpleadoRegistro?: number;
+  idTipoPedido?: string;
+  idEstadoPedido?: string;
   fechaRegistro?: string;
+  fechaEntrega?: string;
+  pedidoTicketProductoRequest?: TicketProductoRequest[];
 }

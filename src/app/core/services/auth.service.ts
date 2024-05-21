@@ -2,6 +2,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { LoginResponse } from "../models/response/login-response";
+import { API_URL } from "../../shared/constants/urls.constant";
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { LoginResponse } from "../models/response/login-response";
 export class AuthService {
 
   constructor(private http: HttpClient) { }
-  private apiurl = 'http://localhost:8080/api/auth/login';
+  private apiurl = API_URL.AUTH;
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -18,7 +19,7 @@ export class AuthService {
   };
 
   login(username: String, password: String) {
-    return this.http.post<LoginResponse>(`${this.apiurl}`, { dni: username }, this.httpOptions);
+    return this.http.post<LoginResponse>(`${this.apiurl}/login`, { dni: username }, this.httpOptions);
   }
 
   isLogged(): boolean {

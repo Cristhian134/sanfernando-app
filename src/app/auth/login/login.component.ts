@@ -23,16 +23,17 @@ import { CardModule } from 'primeng/card';
 })
 
 export class LoginComponent {
-  constructor(
-    private formBuilder: FormBuilder,
-    private authService: AuthService,
-    private router: Router,
-  ) { }
 
   loginForm = this.formBuilder.group({
     username: this.formBuilder.control('', Validators.required),
     password: this.formBuilder.control('', Validators.required),
   })
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+  ) { }
 
   private userData?: LoginResponse;
 
@@ -44,6 +45,7 @@ export class LoginComponent {
           console.log(this.userData)
           sessionStorage.setItem('dni', this.userData.dni);
           sessionStorage.setItem('area', this.userData.area);
+          sessionStorage.setItem('idEmpleado', this.userData.idEmpleado.toString());
           this.router.navigate(['pages/home'])
           console.log(sessionStorage?.getItem("dni"))
           console.log("Redireccionando...")

@@ -33,6 +33,10 @@ export const PAGES_ROUTES: Routes = [
           { path: 'solicitud-productos', component: SolicitudProductosComponent },
         ]
       },
+      {
+        path: 'detalle/:idPedido',
+        component: DetallePedidoComponent,
+      },
       { path: '', component: PedidosHomeComponent }
     ],
     canActivate: [authGuard]

@@ -5,6 +5,9 @@ import { ProductoResponse } from "../models/response/producto";
 import { PedidoListaResponse } from "../models/response/pedido-lista";
 import { PedidoFormRequest } from "../models/request/pedido-form-request";
 import { PedidoFormResponse } from "../models/response/pedido-form-response";
+import { API_URL } from "../../shared/constants/urls.constant";
+import { PedidoRequest } from "../models/request/pedido-request";
+import { PedidoResponse } from "../models/response/pedido-response";
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +15,7 @@ import { PedidoFormResponse } from "../models/response/pedido-form-response";
 export class PedidosService {
 
   constructor(private http: HttpClient) { }
-  private apiurl = 'http://localhost:8080/api/pedido';
+  private apiurl = API_URL.PEDIDOS;
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -30,5 +33,9 @@ export class PedidosService {
 
   postDatosEnvio(pedidoFormRequest: PedidoFormRequest) {
     return this.http.post<PedidoFormResponse>(`${this.apiurl}/datos`, pedidoFormRequest, this.httpOptions);
+  }
+
+  postNewPedido(pedidoRequest: PedidoRequest) {
+    return this.http.post<PedidoResponse>(`${this.apiurl}/new`, pedidoRequest, this.httpOptions);
   }
 }

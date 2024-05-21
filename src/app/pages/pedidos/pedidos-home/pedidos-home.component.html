@@ -58,7 +58,8 @@
         <p-tag [value]="selectedPedido?.estado" [severity]="getSeverity(selectedPedido?.estado)" />
       </td>
       <td>
-        <p-button label="Detalles" icon="pi pi-angle-right" iconPos="right" styleClass="p-button-success"></p-button>
+        <p-button (click)="getDetalles(selectedPedido?.idPedido)" label="Detalles" icon="pi pi-angle-right"
+          iconPos="right" styleClass="p-button-success"></p-button>
       </td>
     </tr>
   </ng-template>
@@ -85,7 +86,8 @@
         <p-tag [value]="selectedPedido?.estado" [severity]="getSeverity(selectedPedido?.estado)" />
       </td>
       <td>
-        <p-button label="Detalles" icon="pi pi-angle-right" iconPos="right" styleClass="p-button-success"></p-button>
+        <p-button (click)="getDetalles(selectedPedido?.idPedido)" label="Detalles" icon="pi pi-angle-right"
+          iconPos="right" styleClass="p-button-success"></p-button>
       </td>
     </tr>
   </ng-template>
