@@ -183,3 +183,81 @@ INSERT INTO elemento_catalogo (nombre, id_elemento_catalogo_tipo, descripcion, c
   ('Impresora de etiquetas', 21, 'Impresora de etiquetas para el área de almacén.', 7, NULL, NULL, NULL, 8000),
   ('Kit de herramientas eléctricas', 21, 'Kit de herramientas eléctricas para el área de mantenimiento.', 7, NULL, NULL, NULL, 3000),
   ('Material de embalaje', 21, 'Material de embalaje para el área de almacén.', 7, NULL, NULL, NULL, 2000);
+
+
+
+CREATE TABLE IF NOT EXISTS reporte_formato (
+ cod_reporte_formato INT NOT NULL,
+ descripcion VARCHAR(10),
+ PRIMARY KEY (cod_reporte_formato)
+);
+
+CREATE TABLE IF NOT EXISTS reporte_estado (
+ cod_reporte_estado INT NOT NULL,
+ descripcion VARCHAR(16),
+ PRIMARY KEY (cod_reporte_estado)
+);
+
+CREATE TABLE IF NOT EXISTS reporte_frecuencia (
+ cod_reporte_frecuencia INT NOT NULL,
+ descripcion INT NOT NULL,
+ cantidad_tiempo INT NOT NULL,
+ unidad_tiempo VARCHAR(16),
+ PRIMARY KEY (cod_reporte_frecuencia)
+);
+
+
+CREATE TABLE IF NOT EXISTS programacion_reporte (
+ cod_programacion_reporte SERIAL NOT NULL,
+ cod_representante INT NOT NULL,
+ cod_reporte_formato INT NOT NULL,
+ cod_reporte_estado INT NULL DEFAULT NULL,
+ cod_reporte_frecuencia INT NULL DEFAULT NULL,
+ fecha_inicio DATE NOT NULL,
+ fecha_fin DATE NOT NULL,
+ PRIMARY KEY (cod_programacion_reporte),
+ CONSTRAINT cod_representante
+  FOREIGN KEY (cod_representante)
+  REFERENCES representante (cod_representante),
+ CONSTRAINT cod_reporte_formato
+  FOREIGN KEY (cod_reporte_formato)
+  REFERENCES reporte_formato (cod_reporte_formato),
+ CONSTRAINT cod_reporte_estado
+  FOREIGN KEY (cod_reporte_estado)
+  REFERENCES reporte_estado (cod_reporte_estado),
+ CONSTRAINT cod_reporte_frecuencia
+  FOREIGN KEY (cod_reporte_frecuencia)
+  REFERENCES reporte_estado (cod_reporte_frecuencia)
+);
+
+CREATE TABLE IF NOT EXISTS reporte (
+ cod_reporte SERIAL NOT NULL,
+ cod_programacion_reporte INT NOT NULL,
+ fecha_generacion DATE NOT NULL,
+ hora_generacion TIME NOT NULL,
+ PRIMARY KEY (cod_reporte),
+ CONSTRAINT cod_programacion_reporte
+  FOREIGN KEY (cod_programacion_reporte)
+  REFERENCES programacion_reporte (cod_programacion_reporte)
+);
+
+INSERT INTO reporte_frecuencia (cod_reporte_frecuencia,descripcion,cantidad_tiempo,unidad_tiempo) VALUES
+  ( 1,  'diario'    , 1,  'dia'),
+  ( 2,  'semanal'   , 7,  'dia'), 
+  ( 3,  'quincenal' , 15, 'dia'),
+  ( 4,  'mensual'   , 1,  'mes'),
+  ( 5,  'trimestral', 3,  'mes'),
+  ( 6,  'semestral' , 6,  'mes'),
+  ( 7,  'prueba'    , 5,  'segundo');
+
+INSERT INTO reporte_formato (cod_reporte_formato,descripcion) VALUES
+  ( 1,  'docx'),
+  ( 2,  'pdf'), 
+  ( 3,  'xlsx'),
+  ( 4,  'csv');
+
+INSERT INTO reporte_estado (cod_reporte_estado,descripcion) VALUES
+  ( 1,  'Activo'),
+  ( 2,  'Inactivo');  
+
+INSERT INTO programacion_reporte ()
