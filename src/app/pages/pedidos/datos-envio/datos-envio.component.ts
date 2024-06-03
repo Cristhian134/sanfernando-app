@@ -44,8 +44,6 @@ export class DatosEnvioComponent implements OnInit {
 
   pedidoFormRequest?: PedidoFormRequest;
   pedidoFormResponse?: PedidoFormResponse;
-  generos?: Genero[];
-  genero?: Genero;
 
   pedidoForm = this.formBuilder.group({
     nombres: this.formBuilder.control('', Validators.required),
@@ -63,10 +61,7 @@ export class DatosEnvioComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private pedidoService: PedidosService,
-  ) {
-    this.generos = PERSONA_GENERO;
-    console.log(this.generos)
-  }
+  ) { }
 
   ngOnInit(): void {
 
@@ -90,7 +85,6 @@ export class DatosEnvioComponent implements OnInit {
           correoEmpresarial: formValue.correo,
         }
       };
-      console.log(this.pedidoFormRequest)
       this.pedidoService.postDatosEnvio(this.pedidoFormRequest as PedidoFormRequest).subscribe((response) => {
         this.pedidoFormResponse = response;
         this.nextPage();

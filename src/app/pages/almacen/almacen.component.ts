@@ -9,5 +9,5 @@ import { Component } from '@angular/core';
   styleUrl: './almacen.component.scss'
 })
 export class AlmacenComponent {
-
+  context = 'as';
 }

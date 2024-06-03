@@ -3,7 +3,8 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { LoginResponse } from "../models/response/login-response";
 import { API_URL } from "../../shared/constants/urls.constant";
-import { ReporteOperacionResponse } from "../models/response/reporte-responses";
+import { ReporteAlmacenStockResponse, ReporteLookUpTablesResponse, ReporteOperacionResponse, ReportePedidoMesResponse, ReportePedidoTopResponse, ReporteProgramacionResponse, ReporteReclamoMesResponse, ReporteReclamoTiempoResponse, ReporteReclamoUrgenciaResponse, ReporteTipoResponse } from "../models/response/reporte-responses";
+import { ReporteProgramacionRequest } from "../models/request/reporte-requests";
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +22,37 @@ export class ReportesService {
 
   getReporteOperacion() {
     return this.http.get<ReporteOperacionResponse[]>(`${this.apiurl}/operacion`, this.httpOptions);
+  }
+
+  getReporteAlmacenStock() {
+    return this.http.get<ReporteAlmacenStockResponse[]>(`${this.apiurl}/almacen/stock`, this.httpOptions);
+  }
+
+  getReporteReclamoUrgencia() {
+    return this.http.get<ReporteReclamoUrgenciaResponse[]>(`${this.apiurl}/reclamo/urgencia`, this.httpOptions);
+  }
+
+  getReporteReclamoTiempo() {
+    return this.http.get<ReporteReclamoTiempoResponse[]>(`${this.apiurl}/reclamo/tiempo`, this.httpOptions);
+  }
+
+  getReporteReclamoMes() {
+    return this.http.get<ReporteReclamoMesResponse[]>(`${this.apiurl}/reclamo/mes`, this.httpOptions);
+  }
+
+  getReportePedidoMes() {
+    return this.http.get<ReportePedidoMesResponse[]>(`${this.apiurl}/pedido/mes`, this.httpOptions);
+  }
+
+  getReportePedidoTop() {
+    return this.http.get<ReportePedidoTopResponse[]>(`${this.apiurl}/pedido/top`, this.httpOptions);
+  }
+
+  getLookUpTables() {
+    return this.http.get<ReporteLookUpTablesResponse>(`${this.apiurl}/lookup/all`, this.httpOptions);
+  }
+
+  postDatosReporteProgramacion(reporteProgramacionRequest: ReporteProgramacionRequest) {
+    return this.http.post<ReporteProgramacionResponse>(`${this.apiurl}/programacion`, reporteProgramacionRequest, this.httpOptions);
   }
 }

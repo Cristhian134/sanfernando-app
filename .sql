@@ -200,18 +200,24 @@ CREATE TABLE IF NOT EXISTS reporte_estado (
 
 CREATE TABLE IF NOT EXISTS reporte_frecuencia (
  cod_reporte_frecuencia INT NOT NULL,
- descripcion INT NOT NULL,
+ unidad_tiempo VARCHAR(16),
  cantidad_tiempo INT NOT NULL,
  unidad_tiempo VARCHAR(16),
  PRIMARY KEY (cod_reporte_frecuencia)
 );
 
+CREATE TABLE IF NOT EXISTS reporte_tipo(
+ cod_reporte_tipo INT NOT NULL,
+ descripcion VARCHAR(16) NOT NULL,
+ PRIMARY KEY (cod_reporte_tipo)
+);
 
 CREATE TABLE IF NOT EXISTS programacion_reporte (
  cod_programacion_reporte SERIAL NOT NULL,
  cod_representante INT NOT NULL,
  cod_reporte_formato INT NOT NULL,
  cod_reporte_estado INT NULL DEFAULT NULL,
+ cod_reporte_tipo INT NOT NULL,
  cod_reporte_frecuencia INT NULL DEFAULT NULL,
  fecha_inicio DATE NOT NULL,
  fecha_fin DATE NOT NULL,
@@ -227,7 +233,10 @@ CREATE TABLE IF NOT EXISTS programacion_reporte (
   REFERENCES reporte_estado (cod_reporte_estado),
  CONSTRAINT cod_reporte_frecuencia
   FOREIGN KEY (cod_reporte_frecuencia)
-  REFERENCES reporte_estado (cod_reporte_frecuencia)
+  REFERENCES reporte_estado (cod_reporte_frecuencia),
+ CONSTRAINT cod_reporte_tipo
+  FOREIGN KEY (cod_reporte_tipo)
+  REFERENCES reporte_tipo (cod_reporte_tipo)
 );
 
 CREATE TABLE IF NOT EXISTS reporte (
@@ -235,26 +244,37 @@ CREATE TABLE IF NOT EXISTS reporte (
  cod_programacion_reporte INT NOT NULL,
  fecha_generacion DATE NOT NULL,
  hora_generacion TIME NOT NULL,
+ cod_reporte_tipo INT NOT NULL,
  PRIMARY KEY (cod_reporte),
  CONSTRAINT cod_programacion_reporte
   FOREIGN KEY (cod_programacion_reporte)
-  REFERENCES programacion_reporte (cod_programacion_reporte)
+  REFERENCES programacion_reporte (cod_programacion_reporte),
+ CONSTRAINT cod_reporte_tipo
+  FOREIGN KEY (cod_reporte_tipo)
+  REFERENCES reporte_tipo (cod_reporte_tipo)
 );
 
 INSERT INTO reporte_frecuencia (cod_reporte_frecuencia,descripcion,cantidad_tiempo,unidad_tiempo) VALUES
-  ( 1,  'diario'    , 1,  'dia'),
-  ( 2,  'semanal'   , 7,  'dia'), 
-  ( 3,  'quincenal' , 15, 'dia'),
-  ( 4,  'mensual'   , 1,  'mes'),
-  ( 5,  'trimestral', 3,  'mes'),
-  ( 6,  'semestral' , 6,  'mes'),
-  ( 7,  'prueba'    , 5,  'segundo');
+  ( 1,  'Diario'    ,         1,  'dia'),
+  ( 2,  'Semanal'   ,         7,  'dia'), 
+  ( 3,  'Quincenal' ,         15, 'dia'),
+  ( 4,  'Mensual'   ,         1,  'mes'),
+  ( 5,  'Trimestral',         3,  'mes'),
+  ( 6,  'Semestral' ,         6,  'mes'),
+  ( 7,  'Prueba (5 seg)'    , 5,  'segundo');
 
 INSERT INTO reporte_formato (cod_reporte_formato,descripcion) VALUES
   ( 1,  'docx'),
   ( 2,  'pdf'), 
   ( 3,  'xlsx'),
   ( 4,  'csv');
+
+INSERT INTO reporte_tipo (cod_reporte_tipo,descripcion) VALUES
+  ( 1,  'General'),
+  ( 2,  'Reclamos'), 
+  ( 3,  'Pedidos'),
+  ( 4,  'Almacen');
+
 
 INSERT INTO reporte_estado (cod_reporte_estado,descripcion) VALUES
   ( 1,  'Activo'),
