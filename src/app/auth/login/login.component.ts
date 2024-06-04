@@ -41,16 +41,15 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value.username as String, this.loginForm.value.password as String).subscribe(res => {
         this.userData = res;
-        if (this.userData.representante || !this.userData.representante) {
+        if (this.userData) {
           console.log(this.userData)
           sessionStorage.setItem('dni', this.userData.dni);
           sessionStorage.setItem('area', this.userData.area);
           sessionStorage.setItem('idEmpleado', this.userData.idEmpleado.toString());
+          sessionStorage.setItem('cargo', this.userData.cargo);
           this.router.navigate(['pages/home'])
-          console.log(sessionStorage?.getItem("dni"))
-          console.log("Redireccionando...")
         } else {
-          console.log("El usuario no esta activo")
+          console.log("Error al iniciar sesión")
         }
 
         // if (this.userData.password === this.loginForm.value.password) {
@@ -64,9 +63,8 @@ export class LoginComponent {
         // }
       })
     } else {
-      sessionStorage.clear()
-      console.log(sessionStorage.getItem("dni") == undefined)
-      console.log("Error en la contraseña/username")
+      sessionStorage.clear();
+      console.log("Error en la contraseña/username");
     }
   }
 }

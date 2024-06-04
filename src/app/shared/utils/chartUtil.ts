@@ -45,7 +45,7 @@ export interface EChartOption {
   },
   xAxis: {
     type: 'category',
-    boundaryGap: false,
+    boundaryGap: true,
     data: [],
   }
   yAxis: {
@@ -108,6 +108,7 @@ export function getEChartUrgenciaTipo(responses: any, labelsY: string[], labelX:
     xAxis: {
       data: chartContent.dataX,
       type: 'category',
+      boundaryGap: true,
     },
     yAxis: {
       type: 'value',
@@ -167,7 +168,7 @@ export function getEchart(responses: any, labelY: string, labelX: string, title:
       }
     },
     xAxis: {
-      boundaryGap: false,
+      boundaryGap: true,
       data: display === "vertical" ? chartContent.dataX : null,
       type: display === "vertical" ? 'category' : 'value',
     },

@@ -19,15 +19,6 @@ export interface ReporteAlmacenStockResponse {
   cantidad?: number;
 }
 
-
-/* 
-public class ReportePedidoTopResponse {
-  private Integer idElementoCatalogo;
-  private String nombre;
-  private String descripcion;
-  private Integer cantidad;
-}
-*/
 export interface ReportePedidoMesResponse {
   mes?: string;
   totalPedidos?: number;
@@ -40,7 +31,7 @@ export interface ReportePedidoTopResponse {
 }
 
 export interface ReporteReclamoUrgenciaResponse {
-  idTipoReclamo?: number;
+  idTipoReclamo?: string;
   descripcion?: string;
   totalTipoReclamo?: number;
   totalUrgenciaBaja?: number;
@@ -58,31 +49,31 @@ export interface ReporteReclamoMesResponse {
   totalReclamos?: number;
 }
 
-
-
-
 export interface ReporteLookUpTablesResponse {
   reporteTipoResponse?: ReporteTipoResponse[];
   reporteFormatoResponse?: ReporteFormatoResponse[];
   reporteFrecuenciaResponse?: ReporteFrecuenciaResponse[];
 }
-
 export interface ReporteTipoResponse {
   idReporteTipo?: number;
   descripcion?: string;
 }
-
 export interface ReporteFormatoResponse {
   idReporteFormato?: number;
   descripcion?: string;
 }
-
 export interface ReporteFrecuenciaResponse {
   idReporteFrecuencia?: number;
   descripcion?: string;
 }
-
 export interface ReporteProgramacionResponse {
   idReporteProgramacion?: number;
 }
-
+export interface ReporteProgramacionMostrarResponse {
+  idProgramacionReporte?: number;
+  descripcionFormato?: string;
+  descripcionTipo?: string;
+  descripcionFrecuencia?: string;
+  fechaInicio?: string;
+  fechaFin?: string;
+}

@@ -1,7 +1,7 @@
 export interface LoginResponse {
   dni: string;
   area: string;
-  cliente: string;
+  cargo: string;
   representante: boolean;
   idEmpleado: number;
 }

@@ -19,6 +19,6 @@ export const routes: Routes = [
     component: PagesComponent,
     path: 'pages',
     loadChildren: () => import('./pages/pages.routes').then(m => m.PAGES_ROUTES),
-    canActivate: [authGuard]
+    canActivate: [authGuard],
   }
 ];

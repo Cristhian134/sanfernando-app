@@ -3,7 +3,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { LoginResponse } from "../models/response/login-response";
 import { API_URL } from "../../shared/constants/urls.constant";
-import { ReporteAlmacenStockResponse, ReporteLookUpTablesResponse, ReporteOperacionResponse, ReportePedidoMesResponse, ReportePedidoTopResponse, ReporteProgramacionResponse, ReporteReclamoMesResponse, ReporteReclamoTiempoResponse, ReporteReclamoUrgenciaResponse, ReporteTipoResponse } from "../models/response/reporte-responses";
+import { ReporteAlmacenStockResponse, ReporteLookUpTablesResponse, ReporteOperacionResponse, ReportePedidoMesResponse, ReportePedidoTopResponse, ReporteProgramacionMostrarResponse, ReporteProgramacionResponse, ReporteReclamoMesResponse, ReporteReclamoTiempoResponse, ReporteReclamoUrgenciaResponse, ReporteTipoResponse } from "../models/response/reporte-responses";
 import { ReporteProgramacionRequest } from "../models/request/reporte-requests";
 
 @Injectable({
@@ -50,6 +50,10 @@ export class ReportesService {
 
   getLookUpTables() {
     return this.http.get<ReporteLookUpTablesResponse>(`${this.apiurl}/lookup/all`, this.httpOptions);
+  }
+
+  getReporteProgramacion() {
+    return this.http.get<ReporteProgramacionMostrarResponse[]>(`${this.apiurl}/programacion/all`, this.httpOptions);
   }
 
   postDatosReporteProgramacion(reporteProgramacionRequest: ReporteProgramacionRequest) {

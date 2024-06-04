@@ -26,8 +26,19 @@ export class AuthService {
     return sessionStorage?.getItem("dni") != undefined;
   }
 
-  getUserRole() {
-    return sessionStorage?.getItem("area")?.toString();
+  getUserRole(): any {
+    return sessionStorage?.getItem("cargo");
   }
 
+  getUserDni(): any {
+    return sessionStorage?.getItem("dni");
+  }
+
+  getUserId(): any {
+    return sessionStorage?.getItem("idEmpleado");
+  }
+
+  getUserArea(): string {
+    return sessionStorage?.getItem("area") as string;
+  }
 }

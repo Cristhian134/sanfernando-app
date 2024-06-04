@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ReportesService } from '../../core/services/reportes.service';
 import { Router } from '@angular/router';
-import { ReporteAlmacenStockResponse, ReporteFormatoResponse, ReporteFrecuenciaResponse, ReporteLookUpTablesResponse, ReporteOperacionResponse, ReporteReclamoTiempoResponse, ReporteTipoResponse } from '../../core/models/response/reporte-responses';
-import { chartHorBar, getArrayDataUrgenciaTipo, getDataSetHorBar, getEChartUrgenciaTipo, getEchart } from '../../shared/utils/chartUtil';
 import { ChartModule } from 'primeng/chart';
 import { CardModule } from 'primeng/card';
 import { DividerModule } from 'primeng/divider';
@@ -14,24 +11,23 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { CalendarModule } from 'primeng/calendar';
 import { FloatLabelModule } from 'primeng/floatlabel';
 import { TableModule } from 'primeng/table';
-
-import * as echarts from 'echarts';
-import { formatDate } from '../../shared/utils/dateUtil';
-import { ReporteGenerarRequest, ReporteProgramacionRequest } from '../../core/models/request/reporte-requests';
+import { RouterModule, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
-
-interface ReporteGenerarForm {
-  idReporteTipo: number;
-  fechaInicio: string;
-  fechaFin: string;
-  fomarto: string;
-}
+import { ReportesService } from '../../../core/services/reportes.service';
+import { formatDate } from '../../../shared/utils/dateUtil';
+import { ReporteGenerarRequest, ReporteProgramacionRequest } from '../../../core/models/request/reporte-requests';
+import { ReporteFormatoResponse, ReporteFrecuenciaResponse, ReporteProgramacionMostrarResponse, ReporteTipoResponse } from '../../../core/models/response/reporte-responses';
+import { AlmacenInventarioComponent } from '../almacen-inventario/almacen-inventario.component';
+import { GraficosReportesComponent } from '../graficos-reportes/graficos-reportes.component';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 
 @Component({
-  selector: 'app-reportes',
+  selector: 'app-reportes-home',
   standalone: true,
   imports: [
+    RouterOutlet,
+    RouterModule,
     ChartModule,
     CardModule,
     DividerModule,
@@ -45,12 +41,15 @@ interface ReporteGenerarForm {
     CalendarModule,
     TableModule,
     InputTextModule,
-    CommonModule
+    CommonModule,
+    ScrollPanelModule,
+    AlmacenInventarioComponent,
+    GraficosReportesComponent
   ],
-  templateUrl: './reportes.component.html',
-  styleUrl: './reportes.component.scss'
+  templateUrl: './reportes-home.component.html',
+  styleUrl: './reportes-home.component.scss'
 })
-export class ReportesComponent implements OnInit {
+export class ReportesHomeComponent implements OnInit {
 
   visibleReporteGenerar: boolean = false;
   visibleReporteProgramacion: boolean = false;
@@ -119,20 +118,13 @@ export class ReportesComponent implements OnInit {
     }
   }
 
-  dataStockAlmacenView: boolean = false;
-  products: ReporteAlmacenStockResponse[] = [];
-  product!: ReporteAlmacenStockResponse;
-  size = { name: 'Small', class: 'p-datatable-sm' };
-
   constructor(
     private router: Router,
     private reportesService: ReportesService,
     private formBuilder: FormBuilder,
   ) { }
 
-  dataTiempoReclamoView: boolean = false;
-  dataTiempoReclamo: ReporteReclamoTiempoResponse[] = [];
-  dataDescripcionTipoReclamo: { idTipoReclamo?: string, descripcion?: string }[] = [];
+  reporteProgramacionMostrar?: ReporteProgramacionMostrarResponse[] = [];
 
   ngOnInit(): void {
 
@@ -145,59 +137,18 @@ export class ReportesComponent implements OnInit {
       this.reporteFormatoView = true;
     })
 
-    this.reportesService.getReporteAlmacenStock().subscribe((response) => {
-      this.products = response;
-      this.dataStockAlmacenView = true;
-    })
-
-    this.reportesService.getReportePedidoMes().subscribe((response) => {
-      this.generateChart(
-        "pedidoMes",
-        getEchart(response, "totalPedidos", "mes", "Pedidos por mes", "Pedidos por mes", "line", "vertical")
-      )
-    })
-    this.reportesService.getReportePedidoTop().subscribe((response) => {
-      this.generateChart(
-        "pedidoTop",
-        getEchart(response, "cantidad", "idElementoCatalogo", "Cantidad total pedida", "Cantidad total pedida", "bar", "vertical")
-      )
-    })
-
-    this.reportesService.getReporteReclamoUrgencia().subscribe((response) => {
-      getArrayDataUrgenciaTipo(response, ["totalUrgenciaBaja", "totalUrgenciaAlta", "totalUrgenciaAlta"], "idTipoReclamo");
-      response.forEach((item) => {
-        this.dataDescripcionTipoReclamo.push({ idTipoReclamo: item.idTipoReclamo, descripcion: item.descripcion })
-      })
-      this.generateChart(
-        "reclamoUrgenciaTipo",
-        getEChartUrgenciaTipo(response, ["totalUrgenciaBaja", "totalUrgenciaMedia", "totalUrgenciaAlta"], "idTipoReclamo", "Reclamos por mes", "Reclamos por mes")
-      )
-    })
-    this.reportesService.getReporteReclamoTiempo().subscribe((response) => {
-      response.forEach((item) => {
-        this.dataTiempoReclamo.push(item)
-      })
-      this.dataTiempoReclamoView = true;
-    })
-    this.reportesService.getReporteReclamoMes().subscribe((response) => {
-      // console.log(getArrayData(response, "totalReclamos", "mes"));
-      this.generateChart(
-        "reclamoMesTipo",
-        getEchart(response, "totalReclamos", "mes", "Reclamos por mes", "Reclamos por mes", "line", "vertical")
-      )
-    })
-
-    this.reportesService.getReporteOperacion().subscribe((response) => {
-      this.generateChart(
-        "almacenOperacionReporte",
-        getEchart(response, "tiempoMedio", "nombreOperacion", "Tiempo medio por tipo de operación", "Tiempo medio por tipo de operación", "bar", "horizontal")
-      )
+    this.reportesService.getReporteProgramacion().subscribe((response) => {
+      this.reporteProgramacionMostrar = response;
     })
   }
 
-  generateChart(idChart: string, option: any) {
-    var chartDom = document.getElementById(idChart);
-    var myChart = echarts.init(chartDom);
-    option && myChart.setOption(option);
+  reporteInventarioView: boolean = true;
+
+  goReportesInventario() {
+    this.reporteInventarioView = !this.reporteInventarioView;
+  }
+
+  getReportesGraficos() {
+    this.reporteInventarioView = false;
   }
 }

@@ -11,10 +11,4 @@ export const loginGuard: CanActivateFn = (route, state) => {
     router.navigate(['pages/home']);
     return false;
   }
-
-  // if (authService.isLogged() == false) {
-  //   router.navigate(['/login']);
-  //   return false;
-  // }
-  // return true;
 };

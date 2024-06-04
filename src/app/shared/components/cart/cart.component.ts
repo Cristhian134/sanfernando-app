@@ -29,11 +29,9 @@ export class CartComponent {
     });
   }
   onClickDelete(index: number) {
-    console.log(this.cantidades)
     this.cartService.deleteProduct(index);
   }
   onChangeCantidad(event: any, index: number) {
-    console.log(event)
     this.cartService.changeCantidad(event, index);
   }
 }

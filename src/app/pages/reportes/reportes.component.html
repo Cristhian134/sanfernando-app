@@ -9,10 +9,14 @@
         <form class="flex flex-column justify-content-between gap-4 h-full" [formGroup]="reporteGenerarForm"
           (ngSubmit)="sendDatosReporteGenerar()">
           <div class="flex flex-column justify-content-between gap-4">
+            @if (reporteFormatoView) {
             <p-dropdown [style]="{ width: '100%' }" [options]="reporteFormato" formControlName="reporteFormatoModel"
               optionLabel="descripcion" placeholder="Formato del reporte" />
+            }
+            @if (reporteTipoView) {
             <p-dropdown [style]="{ width: '100%' }" [options]="reporteTipo" formControlName="reporteTipoModel"
               optionLabel="descripcion" placeholder="Selecciona el tipo de reporte" />
+            }
             <div class="flex flex-row justify-content-between gap-3">
               <p-floatLabel>
                 <p-calendar class="h-2rem w-full" dateFormat="dd/mm/yy" formControlName="fechaInicio" />
@@ -39,12 +43,18 @@
         <form class="flex flex-column justify-content-between gap-4 h-full" [formGroup]="reporteProgramacionForm"
           (ngSubmit)="sendDatosReporteProgramacion()">
           <div class="flex flex-column justify-content-between gap-4">
+            @if (reporteFrecuenciaView) {
             <p-dropdown [style]="{ width: '100%' }" [options]="reporteFrecuencia"
               formControlName="reporteFrecuenciaModel" optionLabel="descripcion" placeholder="Frecuencia..." />
+            }
+            @if (reporteFormatoView) {
             <p-dropdown [style]="{ width: '100%' }" [options]="reporteFormato" formControlName="reporteFormatoModel"
               optionLabel="descripcion" placeholder="Formato del reporte" />
+            }
+            @if (reporteTipoView) {
             <p-dropdown [style]="{ width: '100%' }" [options]="reporteTipo" formControlName="reporteTipoModel"
               optionLabel="descripcion" placeholder="Selecciona el tipo de reporte" />
+            }
             <div class="flex flex-row justify-content-between gap-3">
               <p-floatLabel>
                 <p-calendar class="h-2rem w-full" dateFormat="dd/mm/yy" formControlName="fechaInicio" />
@@ -134,9 +144,12 @@
     }
   </div>
 
-  <div class="pedidoReporte">
+  <div class="pedidoReporte w-full">
     <p-card subheader="Cantidad de pedidos por mes">
-      <div class="" id="pedidoMes" style="width: 300px; height: 200px;"></div>
+      <div class="" id="pedidoMes" style="width: 18.75rem; height: 200px;"></div>
+    </p-card>
+    <p-card subheader="Productos más pedidos">
+      <div id="pedidoTop" style="width: calc(100vw - 300px - 29.6rem); height: 200px;"></div>
     </p-card>
   </div>
 
@@ -147,7 +160,7 @@
   <div class="reclamoReporte">
 
     <p-card subheader="Cantidad de reclamos por mes">
-      <div class="" id="reclamoMesTipo" style="width: 300px; height: 200px;"></div>
+      <div class="" id="reclamoMesTipo" style="width: 18.75rem; height: 200px;"></div>
     </p-card>
 
     <div class="reclamoTiempo">
@@ -194,14 +207,23 @@
       }
     </div>
     <p-card subheader="Cantidad de reclamos por tipo">
-      <div class="" id="reclamoUrgenciaTipo" style="width: 300px; height: 200px;"></div>
+      <div class="" id="reclamoUrgenciaTipo" style="width: 18.75rem; height: 200px;"></div>
     </p-card>
 
   </div>
 
   <div class="almacenReporte">
     <p-card subheader="Tiempo medio por tipo de operación">
-      <div class="" id="almacenOperacionReporte" style="width: 300px; height: 200px;"></div>
+      <div class="" id="almacenOperacionReporte" style="width: 18.75rem; height: 200px;"></div>
+    </p-card>
+    <p-card subheader="Tipos de reclamos:">
+      @if (dataDescripcionTipoReclamo.length >0) {
+      <ul class="text-sm list-none line-height-2 font-light m-0 p-0" style="width: 18.75rem; height: 200px;">
+        @for (dataDescripcion of dataDescripcionTipoReclamo; track $index) {
+        <li class="p-0">{{dataDescripcion.idTipoReclamo}}: {{dataDescripcion.descripcion}}</li>
+        }
+      </ul>
+      }
     </p-card>
   </div>
 </div>
