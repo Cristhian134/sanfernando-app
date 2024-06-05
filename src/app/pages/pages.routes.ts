@@ -6,6 +6,8 @@ import { authGuard } from "../core/guards/auth.guard";
 import { ControlComponent } from "./control/control.component";
 import { ReclamosComponent } from "./reclamos/reclamos.component";
 import { SeguimientoComponent } from "./seguimiento/seguimiento.component";
+import { VistaProcesosComponent } from "./almacen/vista-procesos/vista-procesos.component";
+import { RegistroOperacionComponent } from "./almacen/registro-operacion/registro-operacion.component";
 
 export const PAGES_ROUTES: Routes = [
   {
@@ -16,7 +18,12 @@ export const PAGES_ROUTES: Routes = [
   {
     path: 'almacen',
     component: AlmacenComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
+    children: [
+      { path: '', component: VistaProcesosComponent },
+      { path: 'vista-procesos', component: VistaProcesosComponent },
+      { path: 'registro-operacion', component: RegistroOperacionComponent }
+    ]
   },
   {
     path: 'control',

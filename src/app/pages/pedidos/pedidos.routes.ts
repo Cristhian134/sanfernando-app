@@ -5,6 +5,7 @@ import { SolicitudProductosComponent } from "./solicitud-productos/solicitud-pro
 import { DetallePedidoComponent } from "./detalle-pedido/detalle-pedido.component";
 import { PedidosHomeComponent } from "./pedidos-home/pedidos-home.component";
 import { modulesGuard } from "../../core/guards/modules.guard";
+import { authGuard } from "../../core/guards/auth.guard";
 
 export const PEDIDOS_ROUTES: Routes = [
   {
@@ -33,6 +34,6 @@ export const PEDIDOS_ROUTES: Routes = [
         component: PedidosHomeComponent
       }
     ],
-    canActivate: [modulesGuard]
+    canActivate: [authGuard]
   },
 ];

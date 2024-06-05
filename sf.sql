@@ -1581,7 +1581,7 @@ INSERT INTO procedimiento (cod_incidencia,cod_tipo_procedimiento,nombre, tiempo_
   ( 9,    'B', 'Nro 9:Problema con el etiquetado',1),
   (10,   'B', 'Nro 10:Problema con el etiquetado',1);   
   
-INSERT INTO norma (cod_norma, cod_incidencia, cod_norma_tipo, fecha_emision, fecha_vigencia) VALUES
+INSERT INTO norma (cod_incidencia, cod_norma_tipo, fecha_emision, fecha_vigencia) VALUES
   ( 1, 'X', '2019-01-24', '2025-01-24'),
   ( 2, 'Y', '2021-02-21', '2029-02-21'),
   ( 3, 'Z', '2020-02-17', '2026-02-17'),

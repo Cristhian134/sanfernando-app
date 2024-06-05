@@ -56,8 +56,8 @@ export const ACCESO_MODULO = {
   },
   pedidos:
   {
-    area: [],
-    users: []
+    area: ["almacen", "atencion al cliente", "produccion", "mantenimiento"],
+    users: ["supervisor de almacén", "asistente operativo"]
   },
 }
 
