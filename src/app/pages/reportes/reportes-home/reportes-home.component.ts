@@ -86,7 +86,9 @@ export class ReportesHomeComponent implements OnInit {
         fechaInicio: fechaInicio,
         fechaFin: fechaFin,
       }
-      console.log(reporteGenerarRequest)
+      this.reportesService.postDatosGenerarReporte(reporteGenerarRequest).subscribe((response) => {
+        console.log(response);
+      })
     } else {
       console.log("Llene todos los campos")
     }

@@ -8,6 +8,7 @@ import { PedidoFormResponse } from "../models/response/pedido-form-response";
 import { API_URL } from "../../shared/constants/urls.constant";
 import { PedidoRequest } from "../models/request/pedido-request";
 import { PedidoResponse } from "../models/response/pedido-response";
+import { Order } from "../models/response/pedidos-response";
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +38,13 @@ export class PedidosService {
 
   postNewPedido(pedidoRequest: PedidoRequest) {
     return this.http.post<PedidoResponse>(`${this.apiurl}/new`, pedidoRequest, this.httpOptions);
+  }
+
+  getDetallePedido(idPedido: number) {
+    return this.http.get<Order>(`${this.apiurl}/details/${idPedido}`, this.httpOptions);
+  }
+
+  getDetallePedidoItems(idPedido: number) {
+    return this.http.get<Order>(`${this.apiurl}/items/${idPedido}`, this.httpOptions);
   }
 }

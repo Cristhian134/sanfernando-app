@@ -11,7 +11,6 @@ export interface ReporteProgramacionRequest {
 export interface ReporteGenerarRequest {
   idRepresentante?: number;
   idReporteFormato?: number;
-  idReporteEstado?: number;
   idReporteTipo?: number;
   fechaInicio?: string;
   fechaFin?: string;

@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { LoginResponse } from "../models/response/login-response";
 import { API_URL } from "../../shared/constants/urls.constant";
 import { ReporteAlmacenStockResponse, ReporteLookUpTablesResponse, ReporteOperacionResponse, ReportePedidoMesResponse, ReportePedidoTopResponse, ReporteProgramacionMostrarResponse, ReporteProgramacionResponse, ReporteReclamoMesResponse, ReporteReclamoTiempoResponse, ReporteReclamoUrgenciaResponse, ReporteTipoResponse } from "../models/response/reporte-responses";
-import { ReporteProgramacionRequest } from "../models/request/reporte-requests";
+import { ReporteGenerarRequest, ReporteProgramacionRequest } from "../models/request/reporte-requests";
 
 @Injectable({
   providedIn: 'root'
@@ -58,5 +58,9 @@ export class ReportesService {
 
   postDatosReporteProgramacion(reporteProgramacionRequest: ReporteProgramacionRequest) {
     return this.http.post<ReporteProgramacionResponse>(`${this.apiurl}/programacion`, reporteProgramacionRequest, this.httpOptions);
+  }
+
+  postDatosGenerarReporte(reporteGenerarRequest: ReporteGenerarRequest) {
+    return this.http.post<ReporteGenerarRequest>(`${this.apiurl}/new`, reporteGenerarRequest, this.httpOptions);
   }
 }
