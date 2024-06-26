@@ -59,10 +59,11 @@ export class TrasladosProcesoComponent implements OnInit {
 
   }
 
-  obtenerTrasladoDetalle() {
+  obtenerTrasladoDetalle(guia: String = this.guiaDeRemision) {
     console.log(this.guiaDeRemision);
-    this.seguimientoService.obtenerTrasladoProcesoDetalle(String(this.guiaDeRemision)).subscribe((response: any) => {
+    this.seguimientoService.obtenerTrasladoProcesoDetalle(String(guia)).subscribe((response: any) => {
       this.trasladoProceso = response;
+      this.guiaDeRemision = guia;
     });
   }
 
