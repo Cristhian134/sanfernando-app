@@ -7,7 +7,21 @@ export default [
   {
     routeLink: 'seguimiento',
     icon: 'fa fa-map-marked',
-    label: 'Seguimiento'
+    label: 'Seguimiento',
+    items: [
+      {
+        routeLink: 'vehiculos',
+        label: 'Vehículos'
+      },
+      {
+        routeLink: 'rutas',
+        label: 'Rutas'
+      },
+      {
+        routeLink: 'transportistas',
+        label: 'Transportistas'
+      }
+    ]
   },
   {
     routeLink: 'almacen',
