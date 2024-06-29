@@ -21,4 +21,16 @@ export class SeguimientoHomeComponent {
   irTrasladosProceso(): void {
     this.router.navigate([`pages/seguimiento/traslados/proceso`]);
   }
+  irTrasladosProgramado(): void{
+    this.router.navigate([`pages/seguimiento/traslados/programado`])
+  }
+  irRuta(): void{
+    this.router.navigate([`pages/seguimiento/rutas`])
+  }
+  irVehiculos(): void{
+    this.router.navigate([`pages/seguimiento/vehiculos`])
+  }
+  irTransportista(): void{
+    this.router.navigate([`pages/seguimiento/transportistas`])
+  }
 }
